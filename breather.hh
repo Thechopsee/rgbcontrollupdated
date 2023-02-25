@@ -1,6 +1,8 @@
 #pragma once 
 #include "rgb.hh"
-class Breather
+#include "Action.hh"
+
+class Breather :Action
 {
     RGB * rgb;
     int maxr,maxg,maxb;

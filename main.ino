@@ -3,6 +3,7 @@
 // public domain, enjoy!
 #include "breather.hh"
 #include "rgb.hh"
+#include "Action.hh"
 
 #define REDPIN 5
 #define GREENPIN 6
@@ -11,22 +12,27 @@
 #define FADESPEED 5     // make this higher to slow down
  
 
-Breather * bt;
+Action * bt;
 void setup() {
   pinMode(REDPIN, OUTPUT);
   pinMode(GREENPIN, OUTPUT);
   pinMode(BLUEPIN, OUTPUT);
   RGB * rgb=new RGB(255,100,50);
-  bt=new Breather(rgb,20);
+  Breather* btt=new Breather(rgb,2);
+  bt=(Action *)btt;
 }
  
 
 void loop() {
+
+  //check internet input
   RGB* next=bt->next()
+  //check connection
   delay(FADESPEED);
   analogWrite(REDPIN, next->getRED());
   analogWrite(GREENPIN, next->getGREEN());
   analogWrite(BLUEPIN, next->getBLUE());
+
   
   /*int r, g, b;
  
