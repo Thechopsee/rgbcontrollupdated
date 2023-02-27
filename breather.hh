@@ -4,16 +4,14 @@
 
 class Breather :Action
 {
-    RGB * rgb;
     int maxr,maxg,maxb;
     int step;
     int min=0;
     bool vydech=true;
     public:
-    Breather(RGB* rgb,int step)
+    Breather(RGB* rgb,int step) :Action(rgb)
     {
         this->step=step;
-        this->rgb=rgb;
         maxr=rgb->getRED();
         maxg=rgb->getGREEN();
         maxb=rgb->getBLUE();
@@ -29,25 +27,28 @@ class Breather :Action
             r-=step;
             g-=step;
             b-=step;
-            if(r<=0 && g<=0 && b<=0)
+            if(r<0 && g<0 && b<0)
             {
                 vydech=false;
             }
-            if(r<0)
+            if(r<=0)
             {
                 r=0;
             }
-            if(g<0)
+            if(g<=0)
             {
                 g=0;
             }
-            if(b<0)
+            if(b<=0)
             {
                 b=0;
             }
         }
         else
         {
+          
+          
+           // Serial.print(r);
             r+=step;
             g+=step;
             b+=step;
@@ -59,15 +60,17 @@ class Breather :Action
             {
                 r=maxr;
             }
-            if(g<maxg)
+            if(g>maxg)
             {
                 g=maxg;
             }
-            if(b<maxb)
+            if(b>maxb)
             {
                 b=maxb;
             }
+            
         }
+        delete this->rgb;
         this->rgb =new RGB(r,g,b);
         return this->rgb;
     }

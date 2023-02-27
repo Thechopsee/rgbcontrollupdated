@@ -1,13 +1,13 @@
+#pragma once
 #include "rgb.hh"
 #include "action.hh"
 class singleColor :Action
 {   
-    private:
-    RGB *rgb;
-    private:
-    singleColor(RGB *rgb)
+
+    public:
+    singleColor(RGB *rgb) :Action(rgb)
     {
-        this->rgb=rgb;
+        return;
     }
     RGB* next()
     {

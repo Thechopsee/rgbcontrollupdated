@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RGB</title>
+    <script>
+        function getColor(ev)
+        {
+            const color = ev.target.value;
+            const r = parseInt(color.substr(1,2), 16);
+            const g = parseInt(color.substr(3,2), 16);
+            const b = parseInt(color.substr(5,2), 16);
+            console.log(`red: ${r}, green: ${g}, blue: ${b}`);
+        }
+    </script>
+</head>
+<body>
+    <label for="colorpicker">Color Picker:</label>
+    <input type="color" id="colorpicker" onchange="getColor(event)" value="#0000ff">
+</body>
+</html>

@@ -9,15 +9,16 @@
 #define GREENPIN 6
 #define BLUEPIN 3
  
-#define FADESPEED 5     // make this higher to slow down
+#define FADESPEED 20     // make this higher to slow down
  
 
 Action * bt;
 void setup() {
+  Serial.begin(9600);
   pinMode(REDPIN, OUTPUT);
   pinMode(GREENPIN, OUTPUT);
   pinMode(BLUEPIN, OUTPUT);
-  RGB * rgb=new RGB(255,100,50);
+  RGB * rgb=new RGB(255,0,0);
   Breather* btt=new Breather(rgb,2);
   bt=(Action *)btt;
 }
@@ -26,13 +27,15 @@ void setup() {
 void loop() {
 
   //check internet input
-  RGB* next=bt->next()
+  RGB* next=bt->next();
   //check connection
   delay(FADESPEED);
   analogWrite(REDPIN, next->getRED());
   analogWrite(GREENPIN, next->getGREEN());
   analogWrite(BLUEPIN, next->getBLUE());
-
+  //Serial.print(next->getRED());
+  //Serial.print(next->getGREEN());
+  //Serial.print(next->getBLUE());
   
   /*int r, g, b;
  

@@ -1,3 +1,4 @@
+#pragma once
 class RGB{
 private:
 int r,g,b;
