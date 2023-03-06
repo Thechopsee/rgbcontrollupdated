@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RGB</title>
+    <!-- připojení Bootstrap CSS souboru -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script>
         function getColor(ev)
         {
@@ -17,7 +18,29 @@
     </script>
 </head>
 <body>
-    <label for="colorpicker">Color Picker:</label>
-    <input type="color" id="colorpicker" onchange="getColor(event)" value="#0000ff">
+    <div class="container-fluid">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-md-6">
+                <h1 class="text-center">RGB</h1>
+                <div class="form-group">
+                    <label for="colorpicker">Color Picker:</label>
+                    <input type="color" class="form-control colorpicker-component" id="colorpicker" onchange="getColor(event)" value="#0000ff">
+                </div>
+            </div>
+            <div class="col-md-7 text-center">
+                <form action="." class="d-inline-block">
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary mr-2" name="ACTION" value="Randomize">Randomizer</button>
+                        <button type="submit" class="btn btn-primary mr-2" name="ACTION" value="B">Breather</button>
+                        <button type="submit" class="btn btn-primary" name="ACTION" value="Fade">Fader</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- připojení Bootstrap JavaScript souboru -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
 </html>

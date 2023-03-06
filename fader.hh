@@ -1,6 +1,7 @@
 #pragma once
 #include "rgb.hh"
 #include "Action.hh"
+#include "enumerators.hh"
 
 
   /*int r, g, b;
@@ -36,17 +37,7 @@
     delay(FADESPEED);
   } */
   
-enum faderTypes
-{
-  up,
-  down
-  };
-enum colorType
-{
-  red,
-  green,
-  blue
-  };
+
 class Fader :Action
 {
   int step;

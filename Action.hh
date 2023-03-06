@@ -9,6 +9,10 @@ class Action
     {
         this->rgb=rgb;
     }
+    RGB * getRGB()
+    {
+        return this->rgb;
+    }
     virtual RGB* next()
     {
         return new RGB(0,0,0);
