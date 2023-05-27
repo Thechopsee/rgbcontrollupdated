@@ -21,6 +21,7 @@ const char* ssid = "ds22";
 const char* password = "jaro9597";
 WiFiServer server(80);
 Action * bt;
+String RegisteredServer=null;
 
 void setup() {
   Serial.begin(9600);
@@ -52,6 +53,8 @@ void setup() {
   RGB * rgb=new RGB(100,0,0);
   Fader* btt=new Fader(1);
   bt=(Action *)btt;
+  //IPAddress serverIP(192, 168, 1, 228);
+  //const int serverPort = 54235;
 }
  
 void resolveInput(String request,WiFiClient client)
@@ -85,8 +88,19 @@ void loop() {
   WiFiClient client = server.available();
     if(client)
     {
-      Serial.println("New Client");
+      String serveron="/?Server=1";
+      String serveron="/?Server=0";
+      
       String request = client.readStringUntil('r');
+
+      if(request.indexOf(serveron.c_str())!=-1)
+      {
+        Serial.println("ServerOn");
+      }
+      if(request.indexOf(serveroff.c_str())!=-1)
+      {
+        Serial.println("ServerOff");
+      }
       Serial.println(request);
       resolveInput(request,client);
     }
