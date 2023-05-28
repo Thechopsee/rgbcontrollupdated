@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsenui.css">
+        <link rel="stylesheet" href="https://unpkg.com/onsenui/css/onsen-css-components.min.css">
+        <script src="https://unpkg.com/onsenui/js/onsenui.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    </head>
+    <body>
+        <ons-page>
+            <ons-toolbar>
+                <div class="left" id="typeBar"> Static</div>
+                <div class="center">RGB Controll</div>
+                <div class="right" id="connectBar">🔴 Not Connected </div>
+            </ons-toolbar>
+
+            <ons-list>
+                <ons-list-header>Select Mode:</ons-list-header>
+                <ons-list-item onclick="openModal('Fader')">
+                    <div class="left">
+                        <img class="list-item__thumbnail" src="C:\Users\sebas\Documents\GitHub\rgbcontrollupdated\img\rgb-fader.gif">
+                    </div>
+                    <div class="center">
+                        <span class="list-item__title">Fader</span>
+                        <span class="list-item__subtitle">The Fader mode gradually adjusts the brightness of the LED, creating a fading effect.Color change included.</span>
+                    </div>
+                </ons-list-item>
+                <ons-list-item onclick="openModal('Randomizer')">
+                    <div class="left">
+                        <img class="list-item__thumbnail" src="C:\Users\sebas\Documents\GitHub\rgbcontrollupdated\img\random-color.gif">
+                    </div>
+                    <div class="center">
+                        <span class="list-item__title">Randomizer</span>
+                        <span class="list-item__subtitle">In the Randomizer mode, the LED changes colors randomly, resulting in a dynamic visual effect.</span>
+                    </div>
+                </ons-list-item>
+                <ons-list-item onclick="openModal('Breather')">
+                    <div class="left">
+                        <img class="list-item__thumbnail" src="C:\Users\sebas\Documents\GitHub\rgbcontrollupdated\img\rgb-breather.gif">
+                    </div>
+                    <div class="center">
+                        <span class="list-item__title">Breather</span>
+                        <span class="list-item__subtitle">The Breather mode causes the LED to rhythmically fade in and out, simulating a breathing effect.</span>
+                    </div>
+                </ons-list-item>
+                <ons-list-item onclick="openModal('Static')">
+                    <div class="left">
+                        <img class="list-item__thumbnail" src="C:\Users\sebas\Documents\GitHub\rgbcontrollupdated\img\static_color.jpg">
+                    </div>
+                    <div class="center">
+                        <span class="list-item__title">Static</span>
+                        <span class="list-item__subtitle">Just singlecolor :)</span>
+                    </div>
+                </ons-list-item>
+            </ons-list>
+
+            <ons-modal var="modal">
+                <ons-page>
+                    <ons-toolbar>
+                        <div class="left">
+                            <ons-back-button onclick="closeModal()">Back</ons-back-button>
+                        </div>
+                        <div class="center">Mode changer</div>
+                    </ons-toolbar>
+
+                    <div class="center">
+                        <h3>Mode: <span id="selectedMode"></span></h3>
+                        <p>Here, set the mode according to your preferences.</p>
+                        <div id="colorshow" width="20px" height="20px">█████████</div>
+                        <form action="." id="formToSubmit">
+                        <ons-input name="ACTION" id="formMode" style="display: none;"></ons-input>
+                        <p>🔴<ons-input id="redInput" modifier="underbar" placeholder="Red" onchange="changePreview()" name="red" value="0" ></ons-input></p>
+                        <p>🟢<ons-input id="greenInput" modifier="underbar" placeholder="Green" onchange="changePreview()" name="green" value="0"></ons-input></p>
+                        <p>🔵<ons-input id="blueInput" modifier="underbar" placeholder="Blue" onchange="changePreview()" name="blue" value="0"></ons-input></p>
+                        <div id="speedDiv">
+                        <p>Speed preferences</p>
+                        <p><ons-input id="speedInput" modifier="underbar" placeholder="Speed" name="speed"></ons-input></p>
+                        <p><ons-button onclick="changeMode()">Change mode</ons-button></p>
+                        <form>
+                        <p><div id="modeProgress"></div></p>
+                        </div>
+                    </div>
+                </ons-page>
+            </ons-modal>
+            <ons-modal var="settings" id="settings">
+                <ons-page>
+                    <ons-toolbar>
+                        <div class="left">
+                            <ons-back-button onclick="closeSettings()">Back</ons-back-button>
+                        </div>
+                        <div class="center">Settings</div>
+                    </ons-toolbar>
+                    <div class="center">
+                        <p><ons-input id="ipAddressInput" modifier="underbar" placeholder="IP address"></ons-input></p>
+                        <p><ons-button onclick="connect()">Connect</ons-button></p>
+                        <p><div id="settingProgress"></div></p>
+                    </div>
+                </ons-page>
+            </ons-modal>
+            <ons-fab position="bottom right" onclick="openSettings()">
+                <ons-icon icon="fa-cog"></ons-icon>
+            </ons-fab>
+
+            <script>
+            var pickedMode="None";
+            function connect()
+            {
+                var sp=document.getElementById("settingProgress");
+                sp.innerHTML="<ons-progress-circular indeterminate></ons-progress-circular>";
+                var ip=document.getElementById("ipAddressInput").value;
+                //TODO Check ip validity
+                //TODO Connect
+                document.getElementById("connectBar").innerHTML="🟢 "+ip;
+                sp.innerHTML="🟢 Connected to: "+ip;
+                //TODO clear
+
+            }
+            function changeMode()
+            {
+                //TODO checkValidity
+                var sp=document.getElementById("modeProgress");
+                sp.innerHTML="<ons-progress-circular indeterminate></ons-progress-circular>";
+                console.log("changing mode");
+                event.preventDefault();
+
+                var form = document.getElementById('formToSubmit');
+                var formData = new FormData(form);
+
+                $.ajax({
+                    url: form.action,
+                    type: form.method,
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function(response) {
+                    console.log('form send');
+                    document.getElementById("speedInput").value="";
+                    document.getElementById("modeProgress").innerHTML="";
+                    document.getElementById("typeBar").innerHTML=pickedMode+"<div id=colorshowBar>█</div>"
+
+                    closeModal();
+                    },
+                    error: function(error) {
+                    console.error('form send error', error);
+                    }
+                });
+
+                form.reset();
+                
+                
+            }
+            function changePreview() {
+                var red = document.getElementById("redInput").value;
+                var green = document.getElementById("greenInput").value;
+                var blue = document.getElementById("blueInput").value;
+                
+                var element = document.getElementById("colorshow");
+                var elem2=document.getElementById("colorshowBar");
+                var color = "rgb(" + parseInt(red) + "," + parseInt(green) + "," + parseInt(blue) + ")";
+                element.style.color = color;
+                elem2.style.color=color;
+            }
+            function openModal(mode) {
+            pickedMode=mode;
+            document.getElementById("formMode").value=mode;
+            if(pickedMode=="Static")
+            {
+                document.getElementById("speedDiv").style.display="none"
+            }
+            else
+            {
+                document.getElementById("speedDiv").style.display="block"
+            }
+            document.getElementById('selectedMode').textContent = mode;
+            var modal = document.querySelector('ons-modal');
+            modal.show();
+            }
+            function closeModal() {
+            pickedMode="None";
+            var modal = document.querySelector('ons-modal');
+            modal.hide();
+            }
+            function openSettings()
+            {
+                var modal =document.getElementById("settings");
+                modal.show();
+            }
+            function closeSettings()
+            {
+                var modal =document.getElementById("settings");
+                modal.hide();
+            }
+            </script>
+        </ons-page>
+    </body>
+</html>
